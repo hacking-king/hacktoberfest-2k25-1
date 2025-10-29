@@ -1,11 +1,18 @@
 # Simple Calculator
+def read_number(prompt):
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid number. Please try again.")
+
 def calculator():
     print("Welcome to Python Calculator!")
     print("Operations: +, -, *, /")
     while True:
-        a = float(input("Enter first number: "))
+        a = read_number("Enter first number: ")
         op = input("Enter operation (+, -, *, /): ")
-        b = float(input("Enter second number: "))
+        b = read_number("Enter second number: ")
 
         if op == '+':
             print("Result:", a + b)
