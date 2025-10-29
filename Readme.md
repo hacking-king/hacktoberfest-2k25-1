@@ -31,3 +31,20 @@ python3 hacktoberfest-2k25-1/to-do.py
 ### To‑Do features
 - Add tasks, toggle done, remove tasks
 - Persists to `todo_data.json` automatically
+
+## Contributing (perfect for Hacktoberfest!)
+1. Fork this repository
+2. Create a branch: `git checkout -b feat/your-change`
+3. Make your changes (see ideas below)
+4. Commit: `git commit -m "feat: describe your change"`
+5. Push: `git push origin feat/your-change`
+6. Open a Pull Request
+
+### Good first issue ideas
+- Add new calculator operations or memory functions
+- Add more chatbot intents and better NLU matching
+- Improve To‑Do UX (edit task title, sort, clear completed)
+- Add unit tests (e.g., for `respond()` in `chat.py`)
+- Improve accessibility and messages
+
+Please keep code simple, readable, and beginner‑friendly. ❤️
