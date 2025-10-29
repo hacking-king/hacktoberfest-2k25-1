@@ -29,33 +29,71 @@ def show_tasks():
     if not tasks:
         print("No tasks yet.")
     else:
-        for i, task in enumerate(tasks, 1):
-            print(f"{i}. {task}")
+        for i, item in enumerate(tasks, 1):
+            if isinstance(item, dict):
+                status = "✅" if item.get("done") else "⬜"
+                print(f"{i}. {status} {item.get('title')}")
+            else:
+                print(f"{i}. ⬜ {item}")
 
 def todo_app():
     print("Welcome to To-Do List Manager ✅")
     while True:
-        print("\n1. Add Task\n2. View Tasks\n3. Remove Task\n4. Exit")
-        choice = input("Enter choice: ")
+        try:
+            print("\n1. Add Task\n2. View Tasks\n3. Toggle Done\n4. Remove Task\n5. Exit")
+            choice = input("Enter choice: ").strip()
 
-        if choice == '1':
-            task = input("Enter new task: ")
-            tasks.append(task)
-            save_tasks(tasks)
-            print("Task added!")
-        elif choice == '2':
-            show_tasks()
-        elif choice == '3':
-            show_tasks()
-            num = int(input("Enter task number to remove: "))
-            if 1 <= num <= len(tasks):
-                tasks.pop(num-1)
-                save_tasks(tasks)
-                print("Task removed!")
-        elif choice == '4':
-            print("Goodbye 👋")
+            if choice == '1':
+                title = input("Enter new task: ").strip()
+                if title:
+                    tasks.append({"title": title, "done": False})
+                    save_tasks(tasks)
+                    print("Task added!")
+                else:
+                    print("Task title cannot be empty.")
+            elif choice == '2':
+                show_tasks()
+            elif choice == '3':
+                show_tasks()
+                if not tasks:
+                    continue
+                try:
+                    num = int(input("Enter task number to toggle: "))
+                except ValueError:
+                    print("Invalid number.")
+                    continue
+                if 1 <= num <= len(tasks):
+                    if isinstance(tasks[num - 1], dict):
+                        tasks[num - 1]["done"] = not tasks[num - 1]["done"]
+                    else:
+                        # Convert old format to new format
+                        tasks[num - 1] = {"title": tasks[num - 1], "done": True}
+                    save_tasks(tasks)
+                    print("Task updated!")
+                else:
+                    print("Invalid task number.")
+            elif choice == '4':
+                show_tasks()
+                if not tasks:
+                    continue
+                try:
+                    num = int(input("Enter task number to remove: "))
+                except ValueError:
+                    print("Invalid number.")
+                    continue
+                if 1 <= num <= len(tasks):
+                    tasks.pop(num - 1)
+                    save_tasks(tasks)
+                    print("Task removed!")
+                else:
+                    print("Invalid task number.")
+            elif choice == '5':
+                print("Goodbye 👋")
+                break
+            else:
+                print("Invalid choice!")
+        except KeyboardInterrupt:
+            print("\nGoodbye 👋")
             break
-        else:
-            print("Invalid choice!")
 
 todo_app()
